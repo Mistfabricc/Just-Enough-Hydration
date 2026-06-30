@@ -8,18 +8,19 @@ public class HydrationData {
     private float hydrationExhaustion = 0.0f;
     private int hydrationTickTimer = 0;
     private static final int MAX_HYDRATION = 20;
-    private static final int TICKS_PER_DRAIN = 6000;
+    private static final int TICKS_PER_DRAIN = 9600;
 
     private ItemStack lastUseItem = ItemStack.EMPTY;
-    private int lastFoodLevel = 20;
-    private boolean hadGlassBottle = false;
+    private int glassBottlesBefore = 0;
+    private int lastFoodLevel = -1;
+    private boolean dehydrationAlertSent = false;
 
     public int getHydrationLevel() {
         return hydrationLevel;
     }
 
     public void setHydrationLevel(int level) {
-        this.hydrationLevel = Math.min(MAX_HYDRATION, level);
+        this.hydrationLevel = Math.max(0, Math.min(MAX_HYDRATION, level));
     }
 
     public float getHydrationExhaustion() {
@@ -55,8 +56,7 @@ public class HydrationData {
     }
 
     public void addHydration(int amount) {
-        int newLevel = this.hydrationLevel + amount;
-        this.hydrationLevel = Math.min(MAX_HYDRATION, newLevel);
+        this.hydrationLevel = Math.max(0, Math.min(MAX_HYDRATION, this.hydrationLevel + amount));
     }
 
     public boolean isHydrated() {
@@ -79,6 +79,14 @@ public class HydrationData {
         this.lastUseItem = stack;
     }
 
+    public int getGlassBottlesBefore() {
+        return glassBottlesBefore;
+    }
+
+    public void setGlassBottlesBefore(int count) {
+        this.glassBottlesBefore = count;
+    }
+
     public int getLastFoodLevel() {
         return lastFoodLevel;
     }
@@ -87,12 +95,12 @@ public class HydrationData {
         this.lastFoodLevel = level;
     }
 
-    public boolean getHadGlassBottle() {
-        return hadGlassBottle;
+    public boolean isDehydrationAlertSent() {
+        return dehydrationAlertSent;
     }
 
-    public void setHadGlassBottle(boolean had) {
-        this.hadGlassBottle = had;
+    public void setDehydrationAlertSent(boolean sent) {
+        this.dehydrationAlertSent = sent;
     }
 
     public void readNbt(CompoundTag nbt) {

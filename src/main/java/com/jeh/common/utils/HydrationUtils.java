@@ -53,44 +53,6 @@ public class HydrationUtils {
     }
 
     public static int getFoodHydrationCost(ItemStack stack) {
-        Item item = stack.getItem();
-        Identifier id = BuiltInRegistries.ITEM.getKey(item);
-        if (id == null) return -1;
-        String path = id.getPath();
-
-        if (path.equals("mushroom_stew") || path.equals("beetroot_soup")
-            || path.equals("rabbit_stew") || path.equals("suspicious_stew")) {
-            return 3;
-        }
-        if (path.equals("milk_bucket")) return 4;
-        if (path.equals("honey_bottle")) return 6;
-        if (path.equals("golden_apple") || path.equals("enchanted_golden_apple")) return 5;
-
-        if (path.equals("pufferfish")) return -6;
-        if (path.equals("rotten_flesh")) return -5;
-
-        if (path.equals("beef") || path.equals("chicken") || path.equals("porkchop")
-            || path.equals("rabbit") || path.equals("mutton")) {
-            return -4;
-        }
-
-        if (path.equals("cooked_beef") || path.equals("cooked_chicken")
-            || path.equals("cooked_porkchop") || path.equals("cooked_rabbit")
-            || path.equals("cooked_mutton")) {
-            return -1;
-        }
-
-        if (path.equals("cod") || path.equals("salmon")) return -3;
-        if (path.equals("cooked_cod") || path.equals("cooked_salmon")) return -1;
-        if (path.equals("spider_eye")) return -3;
-
-        if (path.equals("potato") || path.equals("baked_potato") || path.equals("poisonous_potato")
-            || path.equals("carrot") || path.equals("beetroot") || path.equals("dried_kelp")
-            || path.equals("sweet_berries") || path.equals("glow_berries")
-            || path.equals("chorus_fruit")) {
-            return -2;
-        }
-
-        return -1;
+        return 0;
     }
 }

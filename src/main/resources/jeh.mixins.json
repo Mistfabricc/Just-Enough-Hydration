@@ -1,4 +1,4 @@
-{ 
+{
   "required": true,
   "minVersion": "0.8",
   "package": "com.jeh.mixin",
@@ -6,7 +6,9 @@
   "mixins": [
     "PlayerEntityMixin"
   ],
-  "client": [],
+  "client": [
+    "HydrationHudMixin"
+  ],
   "injectors": {
     "defaultRequire": 1
   }

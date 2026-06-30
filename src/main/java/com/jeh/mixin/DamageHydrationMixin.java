@@ -1,5 +1,5 @@
 package com.jeh.mixin;
- 
+
 import com.jeh.common.utils.HydrationUtils;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
@@ -13,12 +13,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class DamageHydrationMixin {
     @Inject(
         method = "hurt",
-        at = @At("HEAD")
+        at = @At("HEAD"),
+        require = 0
     )
     private void onHurt(DamageSource source, float amount, CallbackInfo ci) {
         LivingEntity entity = (LivingEntity) (Object) this;
         if (entity instanceof Player player) {
-            // Getting hurt costs hydration (regeneration takes energy)
             int cost = Math.max(1, (int) (amount / 2));
             HydrationUtils.addHydration(player, -cost);
         }
