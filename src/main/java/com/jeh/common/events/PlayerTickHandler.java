@@ -54,7 +54,20 @@ public class PlayerTickHandler {
             data.addExhaustion(0.015f);
         }
 
-        // Detect potion and food consumption
+        // Food detection via food level increase (runs BEFORE state machine clears lastUseItem)
+        int currentFood = player.getFoodData().getFoodLevel();
+        if (data.getLastFoodLevel() >= 0 && currentFood > data.getLastFoodLevel()) {
+            ItemStack used = data.getLastUseItem();
+            if (used.getItem() != Items.POTION) {
+                int cost = getFoodHydrationCost(used);
+                if (cost != 0) {
+                    HydrationUtils.addHydration(player, cost);
+                }
+            }
+        }
+        data.setLastFoodLevel(currentFood);
+
+        // Detect potion and food consumption (state machine for use-item transitions)
         if (player.isUsingItem()) {
             data.setLastUseItem(player.getUseItem().copy());
             if (player.getUseItem().getItem() == Items.POTION) {
@@ -71,19 +84,6 @@ public class PlayerTickHandler {
                 }
             }
         }
-
-        // Food detection via food level increase (reliable detection)
-        int currentFood = player.getFoodData().getFoodLevel();
-        if (data.getLastFoodLevel() >= 0 && currentFood > data.getLastFoodLevel()) {
-            ItemStack used = data.getLastUseItem();
-            if (used.getItem() != Items.POTION) {
-                int cost = getFoodHydrationCost(used);
-                if (cost != 0) {
-                    HydrationUtils.addHydration(player, cost);
-                }
-            }
-        }
-        data.setLastFoodLevel(currentFood);
 
         int hydrationLevel = data.getHydrationLevel();
 
@@ -121,6 +121,18 @@ public class PlayerTickHandler {
         } else if (hydrationLevel <= 5) {
             if (player.tickCount % 2400 == 0) {
                 player.sendSystemMessage(Component.translatable("message.jeh.thirsty"));
+            }
+        }
+
+        // Health regen: use food when vanilla won't (food < 18), hydration only when starving
+        if (player.tickCount % 80 == 0 && player.getHealth() < player.getMaxHealth()) {
+            int foodLevel = player.getFoodData().getFoodLevel();
+            if (foodLevel > 0 && foodLevel < 18) {
+                player.heal(1.0f);
+                player.getFoodData().setFoodLevel(foodLevel - 1);
+            } else if (foodLevel <= 0 && hydrationLevel > 0) {
+                player.heal(1.0f);
+                data.setHydrationLevel(hydrationLevel - 1);
             }
         }
 
