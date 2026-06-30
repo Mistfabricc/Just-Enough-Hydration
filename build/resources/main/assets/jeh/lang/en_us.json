@@ -1,0 +1,12 @@
+{
+  "item.jeh.water_bottle": "Water Bottle",
+  "item.jeh.empty_bottle": "Empty Bottle",
+  "item.jeh.purified_water_bottle": "Purified Water Bottle",
+  "key.jeh.hydration": "Hydration",
+  "death.attack.dehydration": "%1$s died of dehydration",
+  "death.attack.dehydration.player": "%1$s died of dehydration while trying to escape %2$s",
+  "message.jeh.dehydrated": "§eYou're dehydrated! Drink water or eat hydrating foods!",
+  "message.jeh.thirsty": "§6You're getting thirsty... find water soon!",
+  "message.jeh.critical": "§cYou're severely dehydrated and starving!",
+  "message.jeh.rehydrated": "§aYou feel refreshed and rehydrated!"
+}

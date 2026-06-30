@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "jeh",
+  "version": "${version}",
+  "name": "Just Enough Hydration V1.2",
+  "description": "Adds a hydration system to Minecraft!",
+  "authors": ["Mistykyunn"],
+  "contact": {
+    "homepage": "https://modrinth.com/user/Mistykyunn",
+    "sources": "https://modrinth.com/user/Mistykyunn"
+  },
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/jeh/icon.png",
+  "environment": "*",
+    "entrypoints": {
+        "client": [
+        "com.jeh.client.JEHClient"
+        ],
+        "main": [
+        "com.jeh.JEH"
+        ]
+    },
+  "mixins": [
+    "jeh.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric-api": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
